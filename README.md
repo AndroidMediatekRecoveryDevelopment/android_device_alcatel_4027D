@@ -1,23 +1,45 @@
-# android_device_alcatel_4027D
-
-Minimal device tree for building TWRP using CM12.1 sources.
-
 # Build
 
-Initializing repo
+* features
 
-        repo init -u git://github.com/CyanogenMod/android.git -b cm-12.1
+  * wifi
+  * gsm (call in / call out / hangout)
+  * egl
+  * sound
+  * camera
+  * BT
+  * sensors
+
+* init
+
+        # repo init -u git://github.com/CyanogenMod/android.git -b cm-11.0
+        
+        # repo sync
+        
+        # source build/envsetup.sh
+        
+        # lunch cm_4027-eng
+
+* recoveries
+
+        # . build/tools/device/makerecoveries.sh cm_4027-eng
     
-        repo sync
+        # mka bootimage
 
-Or download the compressed CM12.1 source from here: http://forum.xda-developers.com/android/software/sources-android-sources-highly-t3231109
+* full build
 
-Cloning device tree
-    
-        git clone https://github.com/kirito96/android_device_alcatel_4027D 4027D
-    
-Make a folder in /devices called alcatel. Copy the 4027D device tree in that /alcatel folder.
+        # brunch cm_4027-eng
 
-Open the terminal and type sh cm12b to run the build script. 
+# MTK
 
-Enjoy.
+Few words about mtk related binaries, services and migration peculiarities.
+
+# Limitations
+
+Services requires root:
+
+`system/core/rootdir/init.rc`
+
+  * surfaceflinger depends on sched_setscheduler calls, unable to change process priority from 'system' user (default user 'system')
+
+  * mediaserver depends on /data/nvram folder access, unable to do voice calls from 'media' user (default user 'media')
